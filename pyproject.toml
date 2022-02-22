@@ -1,0 +1,63 @@
+[tool.poetry]
+name = "repo-outline"
+version = "0.1.0"
+description = ""
+authors = ["The Policy Lab <thepolicylab@brown.edu>"]
+license = "MIT"
+packages = [
+    { include = "pyutils", from = "src" }
+]
+
+[tool.poetry.dependencies]
+python = ">=3.8,<3.10"
+scipy = "^1.6.3"
+pymc3 = "^3.11.2"
+pandas = "^1.2.4"
+jupyter = "^1.0.0"
+openpyxl = "^3.0.7"
+requests = "^2.25.1"
+beautifulsoup4 = "^4.9.3"
+tqdm = "^4.60.0"
+geopandas = "^0.9.0"
+Rtree = "^0.9.7"
+census = "^0.8.17"
+python-dotenv = "^0.18.0"
+us = "^2.0.2"
+pyarrow = "^7.0.0"
+
+[tool.poetry.dev-dependencies]
+isort = "^5.8.0"
+pytest = "^6.2.4"
+pylint = "^2.8.2"
+black = "^21.5b0"
+pytest-xdist = "^2.2.1"
+pytest-asyncio = "^0.15.1"
+mypy = "^0.910"
+nbqa = "^1.2.3"
+
+[tool.poetry.scripts]
+ipums = "pyutils.cli:cli"
+
+[tool.isort]
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+line_length = 88
+
+[tool.pylint.basic]
+good-names = "i,j,k,ex,Run,_,df,pc"
+
+[tool.pylint.messages_control]
+disable = "C0330, C0326, R0912, R0913, R0914, R0915"
+
+[tool.pylint.format]
+max-line-length = "88"
+
+[tool.pytest.ini_options]
+markers = [ "slow: Run with --runslow" ]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

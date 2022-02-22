@@ -1,0 +1,25 @@
+# Python cruft
+*.pyc
+__pycache__
+*.egg-info
+.venv
+.pytest_cache
+dist
+.ipynb_checkpoints
+.mypy_cache
+
+# Editor cruft
+.vscode
+.*.swp
+
+# Secrets
+.env
+.env.test
+/data/unvax_data
+.Rproj.user
+
+# Mac cruft
+.DS_Store
+
+# Make sure not to track data with location info
+data/final_data_one_line_per_individual.csv
