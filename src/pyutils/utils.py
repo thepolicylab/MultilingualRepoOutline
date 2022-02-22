@@ -2,12 +2,15 @@
 A place to store small, testable utilites
 """
 from typing import Optional
+
 import requests
 
 from pyutils.types import FilenameType
 
 
-def download_file(url: str, output_file: FilenameType, session: Optional[requests.Session] = None):
+def download_file(
+    url: str, output_file: FilenameType, session: Optional[requests.Session] = None
+):
     """
     Download a file to a location. Note that this function does call
     `requests.Response.raise_for_status()`.

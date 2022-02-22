@@ -24,6 +24,7 @@ census = "^0.8.17"
 python-dotenv = "^0.18.0"
 us = "^2.0.2"
 pyarrow = "^7.0.0"
+pandera = "^0.9.0"
 
 [tool.poetry.dev-dependencies]
 isort = "^5.8.0"
