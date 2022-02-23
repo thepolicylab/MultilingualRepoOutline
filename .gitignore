@@ -21,5 +21,5 @@ dist
 # Mac cruft
 .DS_Store
 
-# Make sure not to track data with location info
-data/final_data_one_line_per_individual.csv
+# Giant files
+/data/cache
