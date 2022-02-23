@@ -1,7 +1,7 @@
 ---
 title: The effect of messages on vaccinations
 author: The Policy Lab
-date: '`r format(Sys.Date(), "%B %d, %Y")`'
+date: 'February 22, 2022'
 header-includes:
   - \usepackage{float,booktabs,longtable,tabu,array}
   - \usepackage[small]{caption}
@@ -22,18 +22,7 @@ graphics: yes
 fontsize: 11pt
 ---
 
-```{r setup, include=FALSE,echo=FALSE}
-library(here)
-source(here::here("src", "R", "000_constants.R"))
-source(here::here("src", "R", "001_rmd_setup.R"))
 
-library(tidyverse)
-library(coin)
-library(estimatr)
-library(randomizr)
-library(conf)
-library(ggpubr)
-```
 
 Explanation of what's going to happen in this file. We recommend at least the following
 sections:

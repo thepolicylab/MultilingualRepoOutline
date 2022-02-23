@@ -1,42 +1,27 @@
 ## A Makefile to organize our work
 SHELL=/bin/sh
-DATA_DIR_UNVAX=data/unvax_data/output
 DATA_DIR=data
-R_SRC_DIR=src/R/300_wrangling
-R_ANALYSIS_DIR=src/R/400_analysis
-R_OUTPUT_DIR=$(R_ANALYSIS_DIR)/output
+
+PAPERMILL=poetry run papermill
+RSCRIPT=Rscript
+
+NOTEBOOK_SRC_DIR=src/notebooks
+NOTEBOOK_OUTPUT_DIR=output/notebooks
+
+R_SRC_DIR=src/R
+R_OUTPUT_DIR=output/R
 
 .PHONY: all
 
+# An example of how to set up your Makefile to run an Rmd file from front to back
+$(R_OUTPUT_DIR)/011_typical_rmd_file.pdf: $(R_SRC_DIR)/011_typical_rmd_file.Rmd
+	$(RSCRIPT) -e "library(rmarkdown); render('$(R_SRC_DIR)/011_typical_rmd_file.Rmd')" && mkdir -p $(R_OUTPUT_DIR) && mv $(R_SRC_DIR)/011_typical_rmd_file.pdf $(R_OUTPUT_DIR)/011_typical_rmd_file.pdf
 
-## We use this for everything but the ZCTA level analysis.
-## See the effects_on_vaccinations.Rmd file for more details.
-$(DATA_DIR)/dat_indiv.csv: $(R_SRC_DIR)/010_counts_from_vax_list_data_setup.R \
-	$(DATA_DIR)/counts_from_vax_list_anytime_after_send.csv \
-	$(DATA_DIR)/counts_from_vax_list_within_one_week_after_send.csv
-	R --file=$(R_SRC_DIR)/010_counts_from_vax_list_data_setup.R
+# An example of how to set up your Makefile to run a notebook from front to back
+$(NOTEBOOK_OUTPUT_DIR)/010_typical_notebook_file.ipynb: $(NOTEBOOK_SRC_DIR)/010_typical_notebook_file.ipynb
+	mkdir -p $(NOTEBOOK_OUTPUT_DIR) && $(PAPERMILL) $(NOTEBOOK_SRC_DIR)/010_typical_notebook_file.ipynb $(NOTEBOOK_OUTPUT_DIR)/010_typical_notebook_file.ipynb
 
-## effects_on_vaccinations.Rmd creates all of the figures for the paper.
-## they are saved one at a time in R_OUTPUT_DIR alone with the report itself.
-$(R_OUTPUT_DIR)/effects_on_vaccinations.pdf: $(DATA_DIR)/dat_indiv.csv \
-	$(DATA_DIR)/final_data_one_line_per_individual.csv \
-	$(DATA_DIR)/combined_demo_data_by_zcta.csv \
-	$(R_ANALYSIS_DIR)/000_constants.R \
-	$(R_ANALYSIS_DIR)/010_rmd_setup.R \
-	$(R_ANALYSIS_DIR)/020_effects_on_vaccinations.Rmd
-	Rscript -e "library(rmarkdown); render('src/R/400_analysis/020_effects_on_vaccinations.Rmd')" && mv $(R_ANALYSIS_DIR)/020_effects_on_vaccinations.pdf $(R_OUTPUT_DIR)/effects_on_vaccinations.pdf
+all: $(R_OUTPUT_DIR)/011_typical_rmd_file.pdf $(NOTEBOOK_OUTPUT_DIR)/010_typical_notebook_file.ipynb
 
-$(R_OUTPUT_DIR)/effects_on_vaccinations.docx: $(DATA_DIR)/dat_indiv.csv \
-	$(DATA_DIR)/final_data_one_line_per_individual.csv \
-	$(DATA_DIR)/combined_demo_data_by_zcta.csv \
-	$(R_ANALYSIS_DIR)/000_constants.R \
-	$(R_ANALYSIS_DIR)/010_rmd_setup.R \
-	$(R_ANALYSIS_DIR)/020_effects_on_vaccinations.Rmd
-	Rscript -e "library(rmarkdown); render('src/R/400_analysis/020_effects_on_vaccinations.Rmd',output_format=word_document())" && mv $(R_ANALYSIS_DIR)/020_effects_on_vaccinations.docx $(R_OUTPUT_DIR)/effects_on_vaccinations.docx
-
-## Figures created within 020_effects_on_vaccinations.Rmd
-$(R_OUTPUT_DIR)/rq2_rq7_plot.pdf: $(R_OUTPUT_DIR)/effects_on_vaccinations.pdf
-$(R_OUTPUT_DIR)/day_by_day_plot.pdf: $(R_OUTPUT_DIR)/effects_on_vaccinations.pdf
-$(R_OUTPUT_DIR)/combined_plot.pdf: $(R_OUTPUT_DIR)/effects_on_vaccinations.pdf
-
-all: $(DATA_DIR)/dat_indiv.csv $(R_OUTPUT_DIR)/effects_on_vaccinations.pdf $(R_OUTPUT_DIR)/effects_on_vaccinations.docx
+clean:
+	rm -f src/R/*.aux src/R/*.fdb_latexmk src/R/*.pdf src/R/*.synctex.gz src/R/*.toc src/R/*.tex
