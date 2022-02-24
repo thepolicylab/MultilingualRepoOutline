@@ -24,4 +24,4 @@ $(NOTEBOOK_OUTPUT_DIR)/010_typical_notebook_file.ipynb: $(NOTEBOOK_SRC_DIR)/010_
 all: $(R_OUTPUT_DIR)/011_typical_rmd_file.pdf $(NOTEBOOK_OUTPUT_DIR)/010_typical_notebook_file.ipynb
 
 clean:
-	rm -f src/R/*.aux src/R/*.fdb_latexmk src/R/*.pdf src/R/*.synctex.gz src/R/*.toc src/R/*.tex
+	rm -f src/R/*.aux src/R/*.fdb_latexmk src/R/*.pdf src/R/*.synctex.gz src/R/*.toc src/R/*.tex src/R/*.md

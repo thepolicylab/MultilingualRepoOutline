@@ -21,7 +21,7 @@ To install these dependency managers, you can run (assumes Mac or Linux; see too
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
-Rscript -e 'if(!requireNamespace("remotes")){install.packages("remotes");remotes::install_github("rstudio/renv")} else {remotes::install_github("rstudio/renv")}'
+Rscript -e 'if(!requireNamespace("renv")) { install.packages("renv") }'
 ```
 
 Once these are installed, you can install all dependencies with
@@ -46,6 +46,14 @@ Use this section to describe your code layout.
 ## Tests
 
 Several tests have been written in the `tests` folder. They may be run with `poetry run py.test`.
+
+## Some Notes
+
+This repository outline has been tested mostly on Mac OS with Intel processors as well
+as on some Windows machines of expert software engineers. There are known issues with
+using `poetry` to install the GIS stack for Python on Mac M1 processors at this time.
+If you'd like to help fix this issue, get in touch and perhaps we can collaborate to
+solve the problem.
 
 ## License
 
